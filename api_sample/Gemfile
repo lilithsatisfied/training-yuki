@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 # RubyおよびRailsのバージョン固定（プロジェクトの先頭に明示）
 ruby '3.2.6'
@@ -18,20 +18,20 @@ gem 'kaminari'
 
 # 本番・開発用共通設定
 gem 'bootsnap', require: false
-gem 'tzinfo-data', platforms: %i[ windows jruby ]
+gem 'tzinfo-data', platforms: %i[windows jruby]
 
 # パスワード認証
 # Userモデルで has_secure_password を使うにはbcryptが必要
- gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # テスト関連
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'annotate'
+  gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry-rails'
-  gem 'annotate'
-  gem 'debug', platforms: %i[ mri windows ]
+  gem 'rspec-rails'
 end
 
 group :development do

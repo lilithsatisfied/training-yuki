@@ -11,7 +11,7 @@
 require 'rails_helper'
 
 RSpec.describe Book, type: :model do
-  it "is valid with valid attributes" do
+  it 'is valid with valid attributes' do
     expect(build(:book)).to be_valid
   end
 end

@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :book do
-    title { "MyString" }
-    author { "MyString" }
+    title { Faker::Book.title }
+    author { Faker::Book.author }
   end
 end

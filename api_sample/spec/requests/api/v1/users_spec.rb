@@ -7,7 +7,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
     context 'when logged in' do
       it 'returns user info as JSON' do
         # ログインしてセッション確立
-        post '/api/v1/login', params: { name: 'yuki', password: 'password123' }
+        post '/api/v1/login', params: { name: 'yuki', password: 'password123' }, headers: { Accept: 'application/json' }
 
         get "/api/v1/users/#{user.id}", headers: { Accept: 'application/json' }
 

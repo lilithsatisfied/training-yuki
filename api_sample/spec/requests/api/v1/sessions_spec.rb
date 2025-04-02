@@ -6,7 +6,7 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
   describe 'POST /login' do
     context 'with valid credentials' do
       it 'returns a success response with user info' do
-        post '/api/v1/login', params: { name: 'yuki', password: 'password123' }
+        post '/api/v1/login', params: { name: 'yuki', password: 'password123' }, headers: { Accept: 'application/json' }
 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
@@ -15,7 +15,7 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
       end
 
       it 'sets session with user_id' do
-        post '/api/v1/login', params: { name: 'yuki', password: 'password123' }
+        post '/api/v1/login', params: { name: 'yuki', password: 'password123' }, headers: { Accept: 'application/json' }
 
         expect(response).to have_http_status(:ok)
         expect(session[:user_id]).to eq(user.id)
@@ -35,7 +35,7 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
 
   describe 'DELETE /logout' do
     it 'logs out the user' do
-      post '/api/v1/login', params: { name: 'yuki', password: 'password123' }
+      post '/api/v1/login', params: { name: 'yuki', password: 'password123' }, headers: { Accept: 'application/json' }
       delete '/api/v1/logout'
 
       expect(response).to have_http_status(:ok)
@@ -47,8 +47,9 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
   describe 'GET /me' do
     context 'when logged in' do
       it 'returns current user info' do
-        post '/api/v1/login', params: { name: user.name, password: 'password123' }
-        get '/api/v1/me'
+        post '/api/v1/login', params: { name: user.name, password: 'password123' },
+                              headers: { Accept: 'application/json' }
+        get '/api/v1/me', headers: { Accept: 'application/json' }
 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)

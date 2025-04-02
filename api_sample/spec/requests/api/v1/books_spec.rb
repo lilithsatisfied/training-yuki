@@ -6,7 +6,7 @@ RSpec.describe 'Api::V1::Books', type: :request do
   describe 'GET /index' do
     context 'when user is logged in' do
       before do
-        post '/api/v1/login', params: { name: 'yuki', password: 'password123' }
+        post '/api/v1/login', params: { name: 'yuki', password: 'password123' }, headers: { Accept: 'application/json' }
       end
 
       it 'returns all books' do

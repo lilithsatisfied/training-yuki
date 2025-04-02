@@ -10,7 +10,8 @@
 #
 FactoryBot.define do
   factory :user do
-    name { "MyString" }
-    password_digest { "MyString" }
+    name { Faker::Name.name }
+    password { 'password123' }
+    password_confirmation { 'password123' }
   end
 end

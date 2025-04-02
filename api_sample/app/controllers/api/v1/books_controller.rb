@@ -1,4 +1,6 @@
 class Api::V1::BooksController < ApplicationController
+  before_action :require_login
+
   def index
     @books = Book.page(params[:page])
   end

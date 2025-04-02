@@ -11,5 +11,17 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'is valid with valid attributes' do
+    expect(build(:user)).to be_valid
+  end
+
+  it 'is invalid without a name' do
+    user = build(:user, name: nil)
+    expect(user).not_to be_valid
+  end
+
+  it 'is invalid without a password' do
+    user = build(:user, password: nil)
+    expect(user).not_to be_valid
+  end
 end

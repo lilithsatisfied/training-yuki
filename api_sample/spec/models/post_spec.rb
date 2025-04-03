@@ -16,19 +16,19 @@ require 'rails_helper'
 RSpec.describe Post, type: :model do
   let(:user) { create(:user) }
 
-  it "is valid with valid attributes" do
-    post = Post.new(content: "テスト投稿", user:)
+  it 'is valid with valid attributes' do
+    post = Post.new(content: 'テスト投稿', user:)
     expect(post).to be_valid
   end
 
-  it "is invalid without content" do
-    post = Post.new(content: "", user:)
+  it 'is invalid without content' do
+    post = Post.new(content: '', user:)
     expect(post).not_to be_valid
     expect(post.errors[:content]).to be_present
   end
 
-  it "is invalid without a user" do
-    post = Post.new(content: "ユーザーなし")
+  it 'is invalid without a user' do
+    post = Post.new(content: 'ユーザーなし')
     expect(post).not_to be_valid
     expect(post.errors[:user]).to be_present
   end

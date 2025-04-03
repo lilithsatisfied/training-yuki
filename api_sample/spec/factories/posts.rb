@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :post do
-    content { "MyString" }
+    content { 'MyString' }
     user { nil }
   end
 end

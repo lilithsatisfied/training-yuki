@@ -1,4 +1,3 @@
-# spec/requests/api/v1/posts_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::Posts', type: :request do
@@ -16,6 +15,8 @@ RSpec.describe 'Api::V1::Posts', type: :request do
         expect(response).to have_http_status(:created)
         json = JSON.parse(response.body)
         expect(json['message']).to eq('投稿を作成しました')
+        expect(json['post']['content']).to eq('This is a test post')
+        expect(json['post']['user_name']).to eq('tester')
       end
 
       it 'returns error when content is blank' do
@@ -23,7 +24,7 @@ RSpec.describe 'Api::V1::Posts', type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         json = JSON.parse(response.body)
-        expect(json['errors']).to be_present
+        expect(json['error']).to be_present
       end
     end
 
@@ -48,6 +49,7 @@ RSpec.describe 'Api::V1::Posts', type: :request do
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
         expect(json.length).to eq(3)
+        expect(json.first).to include('id', 'content', 'user_name')
       end
     end
 

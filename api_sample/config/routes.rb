@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       delete '/logout', to: 'sessions#destroy'
       get '/me', to: 'sessions#me'
       resources :users, only: [:show]
+      post '/users/:id/follow', to: 'follows#create'
+      post '/users/:id/unfollow', to: 'follows#destroy'
     end
   end
 end

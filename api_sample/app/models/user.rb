@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :followees, through: :active_follows, source: :followee
   has_many :passive_follows, class_name: 'Follow', foreign_key: 'followee_id', dependent: :destroy
   has_many :followers, through: :passive_follows, source: :follower
+  has_many :posts, dependent: :destroy
 
   has_secure_password
   validates :name, presence: true, uniqueness: true

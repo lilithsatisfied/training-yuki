@@ -3,7 +3,7 @@ class Api::V1::SessionsController < ApplicationController
     @user = User.find_by(name: params[:name])
     if @user&.authenticate(params[:password])
       session[:user_id] = @user.id
-      render :create, status: :ok
+      render :create, formats: :json, status: :ok
     else
       render json: { error: 'ログインに失敗しました' }, status: :unauthorized
     end
@@ -12,7 +12,7 @@ class Api::V1::SessionsController < ApplicationController
   def me
     if current_user
       @user = current_user
-      render :me, status: :ok
+      render :me, formats: :json, status: :ok
     else
       render json: { error: 'ログインしていません' }, status: :unauthorized
     end

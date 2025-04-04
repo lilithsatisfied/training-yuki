@@ -15,6 +15,8 @@ RSpec.describe 'Api::V1::Likes', type: :request do
         expect(response).to have_http_status(:created)
         json = JSON.parse(response.body)
         expect(json['message']).to eq('いいねしました')
+        expect(json['post']['id']).to eq(post_record.id)
+        expect(json['post']['user_name']).to eq('tester')
       end
 
       it 'returns error when already liked' do
@@ -46,6 +48,7 @@ RSpec.describe 'Api::V1::Likes', type: :request do
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
         expect(json['message']).to eq('いいねを解除しました')
+        expect(json['post_id']).to eq(post_record.id)
       end
 
       it 'returns error if not liked yet' do
@@ -54,6 +57,13 @@ RSpec.describe 'Api::V1::Likes', type: :request do
         expect(response).to have_http_status(:not_found)
         json = JSON.parse(response.body)
         expect(json['error']).to eq('いいねしていません')
+      end
+    end
+
+    context 'when not logged in' do
+      it 'returns unauthorized' do
+        post "/api/v1/posts/#{post_record.id}/unlike"
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end

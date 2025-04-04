@@ -1,4 +1,3 @@
-# spec/requests/api/v1/comments_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::Comments', type: :request do
@@ -18,7 +17,7 @@ RSpec.describe 'Api::V1::Comments', type: :request do
         json = JSON.parse(response.body)
         expect(json['message']).to eq('コメントを投稿しました')
         expect(json['comment']['content']).to eq('Nice post!')
-        expect(json['comment']['user_id']).to eq(user.id)
+        expect(json['comment']['user_name']).to eq('tester')
       end
 
       it 'returns error when content is blank' do
@@ -32,8 +31,7 @@ RSpec.describe 'Api::V1::Comments', type: :request do
 
     context 'when not logged in' do
       it 'returns unauthorized' do
-        post "/api/v1/posts/#{post_record.id}/comments", params: { comment: { content: 'test' } }
-
+        post "/api/v1/posts/#{post_record.id}/comments", params: { comment: { content: 'Test' } }
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -42,11 +40,9 @@ RSpec.describe 'Api::V1::Comments', type: :request do
       before do
         post '/api/v1/login', params: { name: user.name, password: 'password123' }
       end
-    
+
       it 'returns not found' do
-        non_existent_post_id = 99999
-        post "/api/v1/posts/#{non_existent_post_id}/comments", params: { comment: { content: 'test' } }
-    
+        post "/api/v1/posts/999999/comments", params: { comment: { content: 'Test' } }
         expect(response).to have_http_status(:not_found)
         json = JSON.parse(response.body)
         expect(json['error']).to eq('投稿が見つかりません')

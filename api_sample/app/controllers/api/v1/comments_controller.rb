@@ -4,11 +4,16 @@ class Api::V1::CommentsController < ApplicationController
   before_action :set_post
 
   def create
-    @comment = current_user.comment_on(@post, comment_params[:content])
-    render json: { message: "コメントを投稿しました", comment: @comment }, status: :created
+    @post = Post.find(params[:id])
+    @comment = current_user.comment_on(@post, params[:comment][:content])
+  
+    render :create, formats: :json, status: :created
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: '投稿が見つかりません' }, status: :not_found
   rescue ActiveRecord::RecordInvalid => e
-    render json: { error: e.record.errors.full_messages }, status: :unprocessable_entity
+    render json: { error: e.message }, status: :unprocessable_entity
   end
+  
 
   private
 

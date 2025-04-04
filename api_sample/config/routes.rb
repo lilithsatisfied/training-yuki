@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :posts, only: %i[index create]
       post '/posts/:id/like', to: 'likes#create'
       post '/posts/:id/unlike', to: 'likes#destroy'
+      post '/posts/:id/comments', to: 'comments#create'
     end
   end
 end

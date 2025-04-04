@@ -1,16 +1,17 @@
 # == Schema Information
 #
-# Table name: posts
+# Table name: comments
 #
 #  id         :integer          not null, primary key
 #  content    :string           not null
 #  user_id    :integer          not null
+#  post_id    :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Post < ApplicationRecord
+class Comment < ApplicationRecord
   belongs_to :user
-  has_many :comments, dependent: :destroy
+  belongs_to :post
 
   validates :content, presence: true
 end

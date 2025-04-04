@@ -1,16 +1,18 @@
 # == Schema Information
 #
-# Table name: posts
+# Table name: comments
 #
 #  id         :integer          not null, primary key
 #  content    :string           not null
 #  user_id    :integer          not null
+#  post_id    :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Post < ApplicationRecord
-  belongs_to :user
-  has_many :comments, dependent: :destroy
-
-  validates :content, presence: true
+FactoryBot.define do
+  factory :comment do
+    content { "MyString" }
+    user { nil }
+    post { nil }
+  end
 end

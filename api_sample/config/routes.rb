@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       post '/users/:id/follow', to: 'follows#create'
       post '/users/:id/unfollow', to: 'follows#destroy'
       resources :posts, only: %i[index create]
+      post '/posts/:id/like', to: 'likes#create'
+      post '/posts/:id/unlike', to: 'likes#destroy'
     end
   end
 end

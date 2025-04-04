@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :passive_follows, class_name: 'Follow', foreign_key: 'followee_id', dependent: :destroy
   has_many :followers, through: :passive_follows, source: :follower
   has_many :posts, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :liked_posts, through: :likes, source: :post
 
   has_secure_password
   validates :name, presence: true, uniqueness: true
@@ -25,5 +27,17 @@ class User < ApplicationRecord
 
   def following?(other_user)
     active_follows.exists?(followee_id: other_user.id)
+  end
+
+  def like!(post)
+    likes.create!(post: post)
+  end
+
+  def unlike!(post)
+    likes.find_by(post: post)&.destroy
+  end
+
+  def liking?(post)
+    liked_posts.exists?(post.id)
   end
 end

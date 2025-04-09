@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       resources :users, only: [:show]
       post '/users/:id/follow', to: 'follows#create'
       post '/users/:id/unfollow', to: 'follows#destroy'
-      resources :posts, only: %i[index create]
+      resources :posts, only: [:index, :create, :show]
       post '/posts/:id/like', to: 'likes#create'
       post '/posts/:id/unlike', to: 'likes#destroy'
       post '/posts/:id/comments', to: 'comments#create'

@@ -15,17 +15,6 @@ class Api::V1::PostsController < ApplicationController
     end
   end
 
-  def show
-    post = Post.find(params[:id])
-    render json: {
-      id: post.id,
-      content: post.content,
-      user_name: post.user.name
-    }, status: :ok
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: '投稿が見つかりません' }, status: :not_found
-  end
-
   private
 
   def post_params

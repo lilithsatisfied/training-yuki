@@ -6,21 +6,20 @@ class Api::V1::CommentsController < ApplicationController
   def create
     @post = Post.find(params[:id])
     @comment = current_user.comment_on(@post, params[:comment][:content])
-  
+
     render :create, formats: :json, status: :created
   rescue ActiveRecord::RecordNotFound
     render json: { error: '投稿が見つかりません' }, status: :not_found
   rescue ActiveRecord::RecordInvalid => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
-  
 
   private
 
   def set_post
     @post = Post.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "投稿が見つかりません" }, status: :not_found
+    render json: { error: '投稿が見つかりません' }, status: :not_found
   end
 
   def comment_params

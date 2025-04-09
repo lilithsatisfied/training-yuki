@@ -42,7 +42,7 @@ RSpec.describe 'Api::V1::Comments', type: :request do
       end
 
       it 'returns not found' do
-        post "/api/v1/posts/999999/comments", params: { comment: { content: 'Test' } }
+        post '/api/v1/posts/999999/comments', params: { comment: { content: 'Test' } }
         expect(response).to have_http_status(:not_found)
         json = JSON.parse(response.body)
         expect(json['error']).to eq('投稿が見つかりません')

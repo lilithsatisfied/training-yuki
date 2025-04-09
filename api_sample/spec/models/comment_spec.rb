@@ -43,4 +43,3 @@ RSpec.describe Comment, type: :model do
     expect(described_class.reflect_on_association(:post).macro).to eq(:belongs_to)
   end
 end
-

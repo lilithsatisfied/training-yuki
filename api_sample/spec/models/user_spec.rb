@@ -31,9 +31,9 @@ describe '#follow!' do
   let!(:followee) { create(:user) }
 
   it 'creates a follow relationship' do
-    expect {
+    expect do
       follower.follow!(followee)
-    }.to change { follower.followees.count }.by(1)
+    end.to change { follower.followees.count }.by(1)
 
     expect(follower.following?(followee)).to be true
   end
@@ -44,9 +44,9 @@ describe '#like! and #liking?' do
   let!(:post) { create(:post, user: user) }
 
   it 'likes a post and checks liking' do
-    expect {
+    expect do
       user.like!(post)
-    }.to change { user.likes.count }.by(1)
+    end.to change { user.likes.count }.by(1)
 
     expect(user.liking?(post)).to be true
   end
@@ -58,9 +58,9 @@ describe '#unlike!' do
 
   it 'removes a like from a post' do
     user.like!(post)
-    expect {
+    expect do
       user.unlike!(post)
-    }.to change { user.likes.count }.by(-1)
+    end.to change { user.likes.count }.by(-1)
   end
 end
 
@@ -69,9 +69,9 @@ describe '#comment_on' do
   let!(:post) { create(:post, user: user) }
 
   it 'creates a comment on a post' do
-    expect {
+    expect do
       user.comment_on(post, 'Nice post!')
-    }.to change { user.comments.count }.by(1)
+    end.to change { user.comments.count }.by(1)
 
     comment = user.comments.last
     expect(comment.content).to eq('Nice post!')

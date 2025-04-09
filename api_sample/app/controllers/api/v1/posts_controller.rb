@@ -15,6 +15,13 @@ class Api::V1::PostsController < ApplicationController
     end
   end
 
+  def show
+    @post = Post.includes(:user).find(params[:id])
+    render :show, formats: :json
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: '投稿が見つかりません' }, status: :not_found
+  end
+
   private
 
   def post_params

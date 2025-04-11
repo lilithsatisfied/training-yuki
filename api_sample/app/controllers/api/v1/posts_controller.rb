@@ -2,7 +2,7 @@ class Api::V1::PostsController < ApplicationController
   before_action :require_login
 
   def index
-    @posts = Post.includes(:user).order(created_at: :desc)
+    @posts = Post.includes(:user).order(created_at: :desc).page(params[:page]).per(params[:per_page] || 10)
     render :index, formats: :json
   end
 

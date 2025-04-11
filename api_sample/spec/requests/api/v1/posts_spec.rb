@@ -40,16 +40,39 @@ RSpec.describe 'Api::V1::Posts', type: :request do
   describe 'GET /posts' do
     context 'when logged in' do
       before do
-        create_list(:post, 3, user:)
+        create_list(:post, 15, user:)
         post '/api/v1/login', params: { name: user.name, password: 'password123' }
       end
 
-      it 'returns a list of posts' do
-        get '/api/v1/posts'
+      it 'returns a paginated list of posts' do
+        get '/api/v1/posts', params: { page: 1, per_page: 10 }
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
-        expect(json.length).to eq(3)
-        expect(json.first).to include('id', 'content', 'user_name')
+
+        # 投稿データの検証
+        expect(json['posts'].length).to eq(10)
+        expect(json['posts'].first).to include('id', 'content', 'user_name')
+
+        # ページネーション情報の検証
+        expect(json['pagination']).to include('current_page', 'total_pages', 'total_count', 'next_page', 'prev_page')
+        expect(json['pagination']['current_page']).to eq(1)
+        expect(json['pagination']['total_count']).to eq(15)
+        expect(json['pagination']['next_page']).to eq(2)
+        expect(json['pagination']['prev_page']).to be_nil
+      end
+
+      it 'returns the second page of posts' do
+        get '/api/v1/posts', params: { page: 2, per_page: 10 }
+        expect(response).to have_http_status(:ok)
+        json = JSON.parse(response.body)
+
+        # 投稿データの検証
+        expect(json['posts'].length).to eq(5) # 2ページ目には5件のみ
+
+        # ページネーション情報の検証
+        expect(json['pagination']['current_page']).to eq(2)
+        expect(json['pagination']['next_page']).to be_nil
+        expect(json['pagination']['prev_page']).to eq(1)
       end
     end
 

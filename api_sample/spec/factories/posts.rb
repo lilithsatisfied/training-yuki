@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :post do
-    content { 'MyString' }
-    user { nil }
+    content { Faker::Lorem.paragraph(sentence_count: 2) } # Fakerを使用してランダムな文章を生成
+    association :user # userファクトリーを自動的に作成して関連付け
   end
 end

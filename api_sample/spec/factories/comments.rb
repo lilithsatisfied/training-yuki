@@ -11,8 +11,8 @@
 #
 FactoryBot.define do
   factory :comment do
-    content { 'MyString' }
-    user { nil }
-    post { nil }
+    content { Faker::Lorem.sentence(word_count: 5) } # Fakerを使用してランダムな文を生成
+    association :user  # userファクトリーを自動的に作成して関連付け
+    association :post  # postファクトリーを自動的に作成して関連付け
   end
 end

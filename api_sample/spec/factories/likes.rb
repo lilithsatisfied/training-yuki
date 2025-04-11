@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :like do
-    user { nil }
-    post { nil }
+    association :user  # userファクトリーを自動的に作成して関連付け
+    association :post  # postファクトリーを自動的に作成して関連付け
   end
 end
